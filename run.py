@@ -1,30 +1,46 @@
 import pygame
 import sys
-
-pygame.init()
-screen = pygame.display.set_mode((1280, 720))
-box = pygame.Rect(10, 10, 70, 70)
+from player import Player
 
 
-while True:
-    # checks if user quits
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit(0)
+class Game(object):
 
-    # check input
-    # keys is a dictionary of booleans
-    keys = pygame.key.get_pressed()
-    if keys [pygame.K_d]:
-        box.x += 1
-    if keys[pygame.K_a]:
-        box.x -= 1
-    if keys[pygame.K_w]:
-        box.y -= 1
-    if keys[pygame.K_s]:
-        box.y += 1
+    def __init__(self):
+        # config
+        self.tps_max = 100.0
 
-    # draws a rectangle
-    screen.fill((0,0,0))
-    pygame.draw.rect(screen, (25, 25, 255), box)
-    pygame.display.flip()
+        # initialisation
+        pygame.init()
+        self.screen = pygame.display.set_mode((1280, 720))
+        self.tps_clock = pygame.time.Clock()
+        self.tps_delta = 0.0
+
+        self.player = Player(self)
+
+        while True:
+            # checks if user quits
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit(0)
+
+            # handles ticks
+            # delta holds the time in seconds
+            self.tps_delta += self.tps_clock.tick() / 1000.0
+            while self.tps_delta > 1 / self.tps_max:
+                self.tick()
+                self.tps_delta -= 1 / self.tps_max
+
+            # drawing
+            self.screen.fill((0, 0, 0))
+            self.draw()
+            pygame.display.flip()
+
+    def tick(self):
+        self.player.tick()
+
+    def draw(self):
+        self.player.draw()
+
+
+if __name__ == "__main__":
+    Game()
