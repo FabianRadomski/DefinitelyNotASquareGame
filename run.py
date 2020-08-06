@@ -14,9 +14,21 @@ class Game(object):
         self.screen = pygame.display.set_mode((1280, 720))
         self.tps_clock = pygame.time.Clock()
         self.tps_delta = 0.0
+
         self.game_objects = []
+
         self.player = Player(self)
+        self.player2 = Player(self)
+
         self.game_objects.append(self.player)
+        self.game_objects.append(self.player2)
+
+
+        self.player2.color = (25, 25, 255)
+        self.player2.down_key = pygame.K_s
+        self.player2.up_key = pygame.K_w
+        self.player2.left_key = pygame.K_a
+        self.player2.right_key = pygame.K_d
 
         while True:
             # checks if user quits
