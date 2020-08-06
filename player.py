@@ -35,7 +35,7 @@ class Player(object):
         if pressed[self.right_key]:
             self.add_force(Vector2(1, 0))
 
-        if pressed[self.right_key]:
+        if pressed[self.left_key]:
             self.add_force(Vector2(-1, 0))
 
         # physics
