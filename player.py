@@ -12,6 +12,13 @@ class Player(object):
         self.velocity = Vector2(0, 0)
         self.acceleration = Vector2(0, 0)
 
+        self.left_key = pygame.K_LEFT
+        self.right_key = pygame.K_RIGHT
+        self.up_key = pygame.K_UP
+        self.down_key = pygame.K_DOWN
+
+        self.color = (255,0,0)
+
     def add_force(self, force):
         self.acceleration += force
 
@@ -19,16 +26,16 @@ class Player(object):
         # input
         pressed = pygame.key.get_pressed()
 
-        if pressed[pygame.K_w]:
+        if pressed[self.up_key]:
             self.add_force(Vector2(0, -1))
 
-        if pressed[pygame.K_s]:
+        if pressed[self.down_key]:
             self.add_force(Vector2(0, 1))
 
-        if pressed[pygame.K_d]:
+        if pressed[self.right_key]:
             self.add_force(Vector2(1, 0))
 
-        if pressed[pygame.K_a]:
+        if pressed[self.right_key]:
             self.add_force(Vector2(-1, 0))
 
         # physics
@@ -41,4 +48,4 @@ class Player(object):
 
     def draw(self):
         rect = pygame.Rect(self.position.x, self.position.y, 70, 70)
-        pygame.draw.rect(self.game.screen, (25, 25, 255), rect)
+        pygame.draw.rect(self.game.screen, self.color, rect)
