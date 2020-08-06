@@ -14,8 +14,9 @@ class Game(object):
         self.screen = pygame.display.set_mode((1280, 720))
         self.tps_clock = pygame.time.Clock()
         self.tps_delta = 0.0
-
+        self.game_objects = []
         self.player = Player(self)
+        self.game_objects.append(self.player)
 
         while True:
             # checks if user quits
@@ -36,10 +37,12 @@ class Game(object):
             pygame.display.flip()
 
     def tick(self):
-        self.player.tick()
+        for game_object in self.game_objects:
+            game_object.tick() 
 
     def draw(self):
-        self.player.draw()
+        for game_object in self.game_objects:
+            game_object.draw()
 
 
 if __name__ == "__main__":
